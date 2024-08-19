@@ -1,20 +1,23 @@
 name: Backup Fork and Sync
+
 on:
   schedule:
-    - cron: '0 0 * * 0'  # 修正了 cron 表達式
+    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
   backup-and-sync:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 明確指定寫入權限
+      contents: write
+      workflows: write  # 明確添加 workflows 權限
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}  # 明確使用 GITHUB_TOKEN
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
         run: |
@@ -70,7 +73,14 @@ jobs:
         run: |
           TIMESTAMP=$(date +"%Y%m%d%H%M%S")
           git tag -a "sync-$TIMESTAMP" -m "Sync on $TIMESTAMP"
-          git push --tags origin
+
+      - name: Push tags
+        run: |
+          if git push --tags origin; then
+            echo "Successfully pushed tags"
+          else
+            echo "Failed to push tags. This is non-critical, continuing workflow."
+          fi
 
       - name: Generate sync report
         if: always()
