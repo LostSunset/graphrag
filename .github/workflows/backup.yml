@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      workflows: write  # 明確添加 workflows 權限
+      workflows: write
 
     steps:
       - name: Checkout repository
@@ -23,7 +23,6 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git config --global checkout.defaultRemote origin
 
       - name: Add upstream repository
         run: |
@@ -40,28 +39,33 @@ jobs:
             if git ls-remote --exit-code --heads upstream $branch > /dev/null 2>&1; then
               git checkout -B $branch origin/$branch
               
-              if git merge upstream/$branch --no-edit; then
+              if git merge upstream/$branch --no-edit --allow-unrelated-histories; then
                 echo "Successfully merged changes for $branch"
                 git push origin $branch
               else
                 echo "Merge conflict in $branch. Attempting automatic resolution..."
                 
-                git diff --name-only --diff-filter=U | xargs git checkout --theirs
-                git add .
-                if git diff --staged --quiet; then
-                  echo "No changes to commit after auto-resolution for $branch"
-                  git merge --abort
+                # 儲存衝突的文件列表
+                conflict_files=$(git diff --name-only --diff-filter=U)
+                
+                # 回退到合併前的狀態
+                git merge --abort
+                
+                # 再次嘗試合併，這次使用 -X theirs 策略
+                if git merge upstream/$branch -X theirs --allow-unrelated-histories; then
+                  echo "Automatically resolved conflicts for $branch using upstream changes"
+                  git push origin $branch
                 else
-                  git commit -m "Auto-resolve conflicts in $branch"
+                  echo "Could not automatically resolve conflicts for $branch"
                   
-                  if git push origin $branch; then
-                    echo "Pushed auto-resolved changes for $branch"
-                  else
-                    echo "Failed to push changes for $branch. Creating conflict marker commit."
-                    git reset --soft HEAD~1
-                    git commit -m "CONFLICT: Auto-resolution failed for $branch"
-                    git push origin $branch
-                  fi
+                  # 創建一個新的分支來存儲上游更改
+                  conflict_branch="${branch}-upstream-changes"
+                  git checkout -b $conflict_branch upstream/$branch
+                  
+                  echo "Created new branch $conflict_branch with upstream changes"
+                  git push origin $conflict_branch
+                  
+                  echo "Please manually resolve conflicts between $branch and $conflict_branch"
                 fi
               fi
             else
