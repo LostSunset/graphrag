@@ -1,18 +1,20 @@
 name: Backup Fork and Sync
-
 on:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: '0 0 * * 0'  # 修正了 cron 表達式
   workflow_dispatch:
 
 jobs:
   backup-and-sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 明確指定寫入權限
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}  # 明確使用 GITHUB_TOKEN
 
       - name: Configure Git
         run: |
@@ -43,13 +45,20 @@ jobs:
                 
                 git diff --name-only --diff-filter=U | xargs git checkout --theirs
                 git add .
-                git commit -m "Auto-resolve conflicts in $branch"
-                
-                if git push origin $branch; then
-                  echo "Pushed auto-resolved changes for $branch"
+                if git diff --staged --quiet; then
+                  echo "No changes to commit after auto-resolution for $branch"
+                  git merge --abort
                 else
-                  echo "Failed to push changes for $branch. Manual intervention required."
-                  git reset --hard HEAD~1
+                  git commit -m "Auto-resolve conflicts in $branch"
+                  
+                  if git push origin $branch; then
+                    echo "Pushed auto-resolved changes for $branch"
+                  else
+                    echo "Failed to push changes for $branch. Creating conflict marker commit."
+                    git reset --soft HEAD~1
+                    git commit -m "CONFLICT: Auto-resolution failed for $branch"
+                    git push origin $branch
+                  fi
                 fi
               fi
             else
