@@ -23,6 +23,13 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Tag current main branch
+        run: |
+          git checkout main
+          TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+          git tag -a "pre-sync-$TIMESTAMP" -m "Pre-sync state on $TIMESTAMP"
+          git push origin "pre-sync-$TIMESTAMP"
+
       - name: Add upstream repository
         run: |
           git remote add upstream https://github.com/microsoft/graphrag.git || git remote set-url upstream https://github.com/microsoft/graphrag.git
@@ -71,14 +78,11 @@ jobs:
         run: |
           git push --all origin
 
-      - name: Create version tag
+      - name: Create post-sync version tag
         run: |
           TIMESTAMP=$(date +"%Y%m%d%H%M%S")
-          git tag -a "sync-$TIMESTAMP" -m "Sync on $TIMESTAMP"
-
-      - name: Push tags
-        run: |
-          git push --tags origin
+          git tag -a "post-sync-$TIMESTAMP" -m "Post-sync state on $TIMESTAMP"
+          git push origin "post-sync-$TIMESTAMP"
 
       - name: Generate sync report
         if: always()
