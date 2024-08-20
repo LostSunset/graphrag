@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      workflows: write  # 確保有 workflow 權限
 
     steps:
       - name: Checkout repository
