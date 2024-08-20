@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      workflows: write  # 確保有 workflow 權限
 
     steps:
       - name: Checkout repository
@@ -40,24 +41,18 @@ jobs:
               
               if git merge upstream/$branch --no-edit --allow-unrelated-histories; then
                 echo "Successfully merged changes for $branch"
-                git push origin $branch
               else
                 echo "Merge conflict in $branch. Attempting automatic resolution..."
                 
-                # 儲存衝突的文件列表
                 conflict_files=$(git diff --name-only --diff-filter=U)
                 
-                # 回退到合併前的狀態
                 git merge --abort
                 
-                # 再次嘗試合併，這次使用 -X theirs 策略
                 if git merge upstream/$branch -X theirs --allow-unrelated-histories; then
                   echo "Automatically resolved conflicts for $branch using upstream changes"
-                  git push origin $branch
                 else
                   echo "Could not automatically resolve conflicts for $branch"
                   
-                  # 創建一個新的分支來存儲上游更改
                   conflict_branch="${branch}-upstream-changes"
                   git checkout -b $conflict_branch upstream/$branch
                   
@@ -67,10 +62,15 @@ jobs:
                   echo "Please manually resolve conflicts between $branch and $conflict_branch"
                 fi
               fi
+              git push origin $branch
             else
               echo "Branch $branch does not exist in upstream. Skipping."
             fi
           done
+
+      - name: Push all branches
+        run: |
+          git push --all origin
 
       - name: Create version tag
         run: |
@@ -79,11 +79,7 @@ jobs:
 
       - name: Push tags
         run: |
-          if git push --tags origin; then
-            echo "Successfully pushed tags"
-          else
-            echo "Failed to push tags. This is non-critical, continuing workflow."
-          fi
+          git push --tags origin
 
       - name: Generate sync report
         if: always()
