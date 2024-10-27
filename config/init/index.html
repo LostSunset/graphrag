@@ -309,23 +309,14 @@
   
     
     
-      
-  
-  
-  
-    
-    
       <li class="md-tabs__item">
-        <a href="../../data/operation_dulce/ABOUT/" class="md-tabs__link">
+        <a href="../../cli/" class="md-tabs__link">
           
   
   Extras
 
         </a>
       </li>
-    
-  
-
     
   
 
@@ -593,27 +584,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../../index/cli/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CLI
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -629,10 +599,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -643,8 +613,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
             <span class="md-nav__icon md-icon"></span>
             Configuration
           </label>
@@ -1112,27 +1082,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../query/cli/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    CLI
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
     
     
     
@@ -1144,10 +1093,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
         
           
-          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1158,8 +1107,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_6">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_5">
             <span class="md-nav__icon md-icon"></span>
             Notebooks
           </label>
@@ -1307,6 +1256,27 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CLI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -1318,10 +1288,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
         
           
-          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1332,8 +1302,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
             <span class="md-nav__icon md-icon"></span>
             Operation Dulce
           </label>
@@ -1486,17 +1456,16 @@
 
 
 <h1 id="configuring-graphrag-indexing">Configuring GraphRAG Indexing</h1>
-<p>To start using GraphRAG, you need to configure the system. The <code>init</code> command is the easiest way to get started. It will create a <code>.env</code> and <code>settings.yaml</code> files in the specified directory with the necessary configuration settings. It will also output the default LLM prompts used by GraphRAG.</p>
+<p>To start using GraphRAG, you must generate a configuration file. The <code>init</code> command is the easiest way to get started. It will create a <code>.env</code> and <code>settings.yaml</code> files in the specified directory with the necessary configuration settings. It will also output the default LLM prompts used by GraphRAG.</p>
 <h2 id="usage">Usage</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>graphrag.index<span class="w"> </span><span class="o">[</span>--init<span class="o">]</span><span class="w"> </span><span class="o">[</span>--root<span class="w"> </span>PATH<span class="o">]</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>graphrag<span class="w"> </span>init<span class="w"> </span><span class="o">[</span>--root<span class="w"> </span>PATH<span class="o">]</span>
 </code></pre></div>
 <h2 id="options">Options</h2>
 <ul>
-<li><code>--init</code> - Initialize the directory with the necessary configuration files.</li>
-<li><code>--root PATH</code> - The root directory to initialize. Default is the current directory.</li>
+<li><code>--root PATH</code> - The project root directory to initialize graphrag at. Default is the current directory.</li>
 </ul>
 <h2 id="example">Example</h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>-m<span class="w"> </span>graphrag.index<span class="w"> </span>--init<span class="w"> </span>--root<span class="w"> </span>./ragtest
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>graphrag<span class="w"> </span>init<span class="w"> </span>--root<span class="w"> </span>./ragtest
 </code></pre></div>
 <h2 id="output">Output</h2>
 <p>The <code>init</code> command will create the following files in the specified directory:</p>
