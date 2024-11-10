@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -945,11 +945,53 @@
   
   
     <li class="md-nav__item">
+      <a href="../../query/global_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Global Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../query/local_search/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Local Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../query/drift_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DRIFT Search
   </span>
   
 
@@ -986,27 +1028,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../../query/global_search/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Global Search
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
     
     
     
@@ -1018,10 +1039,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1032,8 +1053,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             Notebooks
           </label>
@@ -1093,6 +1114,27 @@
   
   <span class="md-ellipsis">
     Local Search
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples_notebooks/drift_search/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DRIFT Search
   </span>
   
 
@@ -1202,6 +1244,27 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../visualization_guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Visualization Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -1213,10 +1276,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
         
           
-          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -1227,8 +1290,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
             <span class="md-nav__icon md-icon"></span>
             Operation Dulce
           </label>
@@ -1520,9 +1583,11 @@
 <h2 id="snapshots">snapshots</h2>
 <h3 id="fields_15">Fields</h3>
 <ul>
-<li><code>graphml</code> <strong>bool</strong> - Emit graphml snapshots.</li>
-<li><code>raw_entities</code> <strong>bool</strong> - Emit raw entity snapshots.</li>
-<li><code>top_level_nodes</code> <strong>bool</strong> - Emit top-level-node snapshots.</li>
+<li><code>embeddings</code> <strong>bool</strong> - Emit embeddings snapshots to parquet.</li>
+<li><code>graphml</code> <strong>bool</strong> - Emit graph snapshots to GraphML.</li>
+<li><code>raw_entities</code> <strong>bool</strong> - Emit raw entity snapshots to JSON.</li>
+<li><code>top_level_nodes</code> <strong>bool</strong> - Emit top-level-node snapshots to JSON.</li>
+<li><code>transient</code> <strong>bool</strong> - Emit transient workflow tables snapshots to parquet.</li>
 </ul>
 <h2 id="encoding_model">encoding_model</h2>
 <p><strong>str</strong> - The text encoding model to use. Default=<code>cl100k_base</code>.</p>
