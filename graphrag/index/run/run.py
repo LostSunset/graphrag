@@ -133,6 +133,11 @@ async def run_pipeline_with_config(
     if is_update_run and update_index_storage:
         delta_dataset = await get_delta_docs(dataset, storage)
 
+        # Fail on empty delta dataset
+        if delta_dataset.new_inputs.empty:
+            error_msg = "Incremental Indexing Error: No new documents to process."
+            raise ValueError(error_msg)
+
         delta_storage = update_index_storage.child("delta")
 
         # Run the pipeline on the new documents
@@ -153,6 +158,7 @@ async def run_pipeline_with_config(
         ):
             tables_dict[table.workflow] = table.result
 
+        progress_reporter.success("Finished running workflows on new documents.")
         await update_dataframe_outputs(
             dataframe_dict=tables_dict,
             storage=storage,
@@ -160,6 +166,7 @@ async def run_pipeline_with_config(
             config=config,
             cache=cache,
             callbacks=NoopVerbCallbacks(),
+            progress_reporter=progress_reporter,
         )
 
     else:
