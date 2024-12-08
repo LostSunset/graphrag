@@ -59,7 +59,7 @@ async def _export_workflow_output(
     workflow: Workflow, exporter: ParquetExporter
 ) -> pd.DataFrame:
     """Export the output from each step of the workflow."""
-    output = cast(pd.DataFrame, workflow.output())
+    output = cast("pd.DataFrame", workflow.output())
     # only write final output that is not empty (i.e. has content)
     # NOTE: this design is intentional - it accounts for workflow steps with "side effects" that don't produce a formal output to save
     if not output.empty:
@@ -68,12 +68,12 @@ async def _export_workflow_output(
 
 
 def _create_callback_chain(
-    callbacks: WorkflowCallbacks | None, progress: ProgressReporter | None
+    callbacks: list[WorkflowCallbacks] | None, progress: ProgressReporter | None
 ) -> WorkflowCallbacks:
-    """Create a callbacks manager."""
+    """Create a callback manager that encompasses multiple callbacks."""
     manager = WorkflowCallbacksManager()
-    if callbacks is not None:
-        manager.register(callbacks)
+    for callback in callbacks or []:
+        manager.register(callback)
     if progress is not None:
         manager.register(ProgressWorkflowCallbacks(progress))
     return manager
