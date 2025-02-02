@@ -1,5 +1,6 @@
 models:
   default_chat_model:
+    azure_auth_type: api_key
     type: ${GRAPHRAG_LLM_TYPE}
     api_key: ${GRAPHRAG_API_KEY}
     api_base: ${GRAPHRAG_API_BASE}
@@ -13,6 +14,7 @@ models:
     parallelization_stagger: 0.3
     async_mode: threaded
   default_embedding_model:
+    azure_auth_type: api_key
     type: ${GRAPHRAG_EMBEDDING_TYPE}
     api_key: ${GRAPHRAG_API_KEY}
     api_base: ${GRAPHRAG_API_BASE}
@@ -26,10 +28,11 @@ models:
     async_mode: threaded
 
 vector_store:
-  type: "lancedb"
-  db_uri: "./tests/fixtures/min-csv/lancedb"
-  container_name: "lancedb_ci"
-  overwrite: True
+  default_vector_store:
+    type: "lancedb"
+    db_uri: "./tests/fixtures/min-csv/lancedb"
+    container_name: "lancedb_ci"
+    overwrite: True
 
 input:
   file_type: csv
