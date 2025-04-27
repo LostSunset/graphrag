@@ -20,11 +20,6 @@ from graphrag.query.context_builder.conversation_history import ConversationHist
 from graphrag.query.llm.text_utils import num_tokens
 from graphrag.query.structured_search.base import BaseSearch, SearchResult
 
-DEFAULT_LLM_PARAMS = {
-    "max_tokens": 1500,
-    "temperature": 0.0,
-}
-
 log = logging.getLogger(__name__)
 """
 Implementation of a generic RAG algorithm (vector search on raw text chunks)
@@ -42,7 +37,7 @@ class BasicSearch(BaseSearch[BasicContextBuilder]):
         system_prompt: str | None = None,
         response_type: str = "multiple paragraphs",
         callbacks: list[QueryCallbacks] | None = None,
-        model_params: dict[str, Any] = DEFAULT_LLM_PARAMS,
+        model_params: dict[str, Any] | None = None,
         context_builder_params: dict | None = None,
     ):
         super().__init__(
@@ -113,6 +108,9 @@ class BasicSearch(BaseSearch[BasicContextBuilder]):
                 llm_calls=1,
                 prompt_tokens=num_tokens(search_prompt, self.token_encoder),
                 output_tokens=sum(output_tokens.values()),
+                llm_calls_categories=llm_calls,
+                prompt_tokens_categories=prompt_tokens,
+                output_tokens_categories=output_tokens,
             )
 
         except Exception:
@@ -125,6 +123,9 @@ class BasicSearch(BaseSearch[BasicContextBuilder]):
                 llm_calls=1,
                 prompt_tokens=num_tokens(search_prompt, self.token_encoder),
                 output_tokens=0,
+                llm_calls_categories=llm_calls,
+                prompt_tokens_categories=prompt_tokens,
+                output_tokens_categories=output_tokens,
             )
 
     async def stream_search(
